@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    <title>ROT13</title>
+</head>
+<body>
+    <h1 style="color:green; font-family:sans-serif;">Try some ROT13!</h1>
+    <form>
+        <textarea name="message" cols="40" rows="8" style="display: block">{% if message: %}{{message}}{% endif %}</textarea>
+        <br>
+        <input type="submit"/>
+    </form>
+</body>
