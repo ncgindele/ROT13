@@ -1,12 +1,8 @@
 import os
 import string
-import sys
 
 import jinja2
 import webapp2
-
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -25,14 +21,17 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler):
     def get(self):
-        message = self.request.get('message', '')
+        self.render('mytemplate.html', text='')
+
+    def post(self):
+        message = self.request.get('text')
         coded_message = cipher(message.encode('utf-8'))
-        self.render("mytemplate.html", message=coded_message)
+        self.render('mytemplate.html', text=coded_message)
 
 def cipher(message):
     encoder = string.maketrans(
-    "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz",
-    "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm")
+    'ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz',
+    'NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm')
     output = None
     for char in message:
         if (not output) and char.isalpha():
